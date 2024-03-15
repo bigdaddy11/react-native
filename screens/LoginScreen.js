@@ -1,23 +1,61 @@
-import React, { useContext } from "react";
-import { colors } from "../config/theme";
-import { ThemeContext } from "../context/ThemeContext";
+import React, { useContext, useState } from "react";
 import {
+  Image,
   SafeAreaView,
-  View,
   Text,
   TouchableOpacity,
-  Image,
+  View,
 } from "react-native";
+import { colors } from "../config/theme";
+import { ThemeContext } from "../context/ThemeContext";
 
-import { MaterialIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
-import CustomButton from "../components/CustomButton";
 import InputField from "../components/InputField";
+import PostComponent from "../components/PostComponent";
 
 const LoginScreen = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
+  
+  const [active, setActive] = useState(false);
+  const [idValue, onChangeID] = useState('');
+  const [pwValue, onChangePW] = useState('');
+
+  //const { isLoading, error, sendRequest: fetchDatas } = httpCall();
+  //const [datas, setDatas] = useState([]);
+
   let activeColors = colors[theme.mode];
+
+  const handleRestCallPress = () => {
+    console.log("idValue : " + idValue);
+    console.log("pwValue : " + pwValue);
+    
+    //httpCall("","GET","http://localhost:8080/member");
+    // useEffect(() => {
+    //   const requestConfig = {
+    //     url: 'http://localhost:8080/member',
+    //     method: "GET",
+    // };
+    //   const applyData = (fetchedData) => {
+    //     const datasList = [];
+    //     for (const key in fetchedData) {
+    //       datasList.push({
+    //         id: key,
+    //         name: fetchedData[key].name,
+    //         job: fetchedData[key].job
+    //       });
+    //     }
+    //     setDatas(datasList); 
+    //   };
+    //   fetchDatas(requestConfig, applyData);
+    // }, [fetchDatas]); // 무한 루프 탈출 !
+  };
+
+  // const ActiveIsPassedLogin = () => {
+  //   return idValue.includes('@') && pwValue.length >= 5
+  //     ? setActive(true)
+  //     : setActive(false);
+  // };
 
   return (
     <SafeAreaView
@@ -47,7 +85,7 @@ const LoginScreen = ({ navigation }) => {
             marginBottom: 30,
           }}
         >
-          Login
+        
         </Text>
 
         <InputField
@@ -62,6 +100,8 @@ const LoginScreen = ({ navigation }) => {
             />
           }
           keyboardType="email-address"
+          value={idValue}
+          onChangeText={text => onChangeID(text)}
         />
 
         <InputField
@@ -77,12 +117,19 @@ const LoginScreen = ({ navigation }) => {
           inputType="password"
           fieldButtonLabel={"Forgot?"}
           fieldButtonFunction={() => {}}
+          value={pwValue}
+          onChangeText={text => onChangePW(text)}
         />
 
-        <CustomButton
+        <PostComponent
           label={"Login"}
+          className={active ? 'activeLoginBtn' : 'loginBtn'}
+          disabled={idValue === '' || pwValue === '' ? true : false}
+          url="http://localhost:8080/member"
+          param={idValue}
           onPress={() => {
-            navigation.navigate("Footer");
+            //handleRestCallPress();
+            //navigation.navigate("Footer");
           }}
         />
 
@@ -93,7 +140,7 @@ const LoginScreen = ({ navigation }) => {
             marginBottom: 30,
           }}
         >
-          Or, login with ...
+          간편 로그인
         </Text>
 
         <View
@@ -109,12 +156,40 @@ const LoginScreen = ({ navigation }) => {
               backgroundColor: activeColors.secondary,
               borderRadius: 10,
               paddingHorizontal: 30,
-              paddingVertical: 10,
+              paddingVertical: 20,
+            }}
+          >
+            <Image
+              source={require("../images/kakao.jpg")}
+              style={{ height: 30, width: 30 }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{
+              backgroundColor: activeColors.secondary,
+              borderRadius: 10,
+              paddingHorizontal: 30,
+              paddingVertical: 20,
+            }}
+          >
+            <Image
+              source={require("../images/naver.jpg")}
+              style={{ height: 30, width: 30 }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{
+              backgroundColor: activeColors.secondary,
+              borderRadius: 10,
+              paddingHorizontal: 30,
+              paddingVertical: 20,
             }}
           >
             <Image
               source={require("../images/google.png")}
-              style={{ height: 24, width: 24 }}
+              style={{ height: 30, width: 30 }}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -123,12 +198,12 @@ const LoginScreen = ({ navigation }) => {
               backgroundColor: activeColors.secondary,
               borderRadius: 10,
               paddingHorizontal: 30,
-              paddingVertical: 10,
+              paddingVertical: 20,
             }}
           >
             <Image
               source={require("../images/facebook.png")}
-              style={{ height: 24, width: 24 }}
+              style={{ height: 30, width: 30 }}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -137,17 +212,17 @@ const LoginScreen = ({ navigation }) => {
               backgroundColor: activeColors.secondary,
               borderRadius: 10,
               paddingHorizontal: 30,
-              paddingVertical: 10,
+              paddingVertical: 20,
             }}
           >
             <Image
               source={require("../images/apple.png")}
-              style={{ height: 24, width: 24 }}
+              style={{ height: 30, width: 30 }}
             />
           </TouchableOpacity>
         </View>
 
-        <View
+        {/* <View
           style={{
             flexDirection: "row",
             justifyContent: "center",
@@ -161,7 +236,7 @@ const LoginScreen = ({ navigation }) => {
               Register
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   );
