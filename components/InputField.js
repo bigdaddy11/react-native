@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { colors } from "../config/theme";
 import { ThemeContext } from "../context/ThemeContext";
 
@@ -10,6 +10,8 @@ export default function InputField({
   keyboardType,
   fieldButtonLabel,
   fieldButtonFunction,
+  value,
+  onChangeText,
 }) {
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
@@ -33,6 +35,8 @@ export default function InputField({
           keyboardType={keyboardType}
           style={{ flex: 1, paddingVertical: 0, color: activeColors.tint }}
           secureTextEntry={true}
+          defaultValue={value}
+          onChangeText={onChangeText}
         />
       ) : (
         <TextInput
@@ -41,6 +45,8 @@ export default function InputField({
           keyboardAppearance={activeColors.primary}
           keyboardType={keyboardType}
           style={{ flex: 1, paddingVertical: 0, color: activeColors.tint }}
+          defaultValue={value}
+          onChangeText={onChangeText}
         />
       )}
       <TouchableOpacity onPress={fieldButtonFunction}>
