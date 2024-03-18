@@ -20,7 +20,7 @@ export default function PostComponent({ label, onPress, param, url }) {
   
   const submitHandler = async (event) => {
     event.preventDefault();
-    //console.log("param : " + {url});
+    console.log("param : " + {url});
     const text = inputRef.current.value;  
     const requestConfig = {
       url: {url},
