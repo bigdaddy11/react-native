@@ -20,15 +20,15 @@ export default function PostComponent({ label, onPress, param, url }) {
   
   const submitHandler = async (event) => {
     event.preventDefault();
-    console.log("param : " + {url});
+    //console.log("param : " + JSON.stringify(param));
     const text = inputRef.current.value;  
     const requestConfig = {
-      url: {url},
+      url: url,
       method: 'GET',
-      data: { text },
+      data: param ,
       headers: { 
-        "Content-Type": "application/json", 
-        "Access-Control-Allow-Origin": "*"
+        //"Content-Type": "application/json", 
+        //"Access-Control-Allow-Origin": "*"
       }
     };
     const applyData = (data) => {

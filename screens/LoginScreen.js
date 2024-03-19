@@ -11,8 +11,9 @@ import { ThemeContext } from "../context/ThemeContext";
 
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
+import axios from "axios";
+import CustomButton from "../components/CustomButton";
 import InputField from "../components/InputField";
-import PostComponent from "../components/PostComponent";
 
 const LoginScreen = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -20,42 +21,38 @@ const LoginScreen = ({ navigation }) => {
   const [active, setActive] = useState(false);
   const [idValue, onChangeID] = useState('');
   const [pwValue, onChangePW] = useState('');
+  const [userStatus, setUserStatus] = useState([]);
 
-  //const { isLoading, error, sendRequest: fetchDatas } = httpCall();
-  //const [datas, setDatas] = useState([]);
-
+  const [requestBody, setRequestBody] = useState();
   let activeColors = colors[theme.mode];
 
+  //const { isLoading, error, sendRequest: fetchDatas } = RestAPICall();
+  //const [datas, setDatas] = useState([]);
   const handleRestCallPress = () => {
-    console.log("idValue : " + idValue);
-    console.log("pwValue : " + pwValue);
-    
-    //httpCall("","GET","http://localhost:8080/member");
-    // useEffect(() => {
-    //   const requestConfig = {
-    //     url: 'http://localhost:8080/member',
-    //     method: "GET",
-    // };
-    //   const applyData = (fetchedData) => {
-    //     const datasList = [];
-    //     for (const key in fetchedData) {
-    //       datasList.push({
-    //         id: key,
-    //         name: fetchedData[key].name,
-    //         job: fetchedData[key].job
-    //       });
-    //     }
-    //     setDatas(datasList); 
-    //   };
-    //   fetchDatas(requestConfig, applyData);
-    // }, [fetchDatas]); // 무한 루프 탈출 !
+    ActiveIsPassedLogin();
+    setRequestBody({
+      userId: idValue,
+      userNm: pwValue
+    });
+    axios.get('http://localhost:8080/member/'+idValue,setRequestBody)
+      .then((response) => {
+        setUserStatus(response.data);
+        {userStatus.map((value, key)=>{
+            console.log([value[0].userId]);
+          })
+        }
+      })
+      .catch((error) =>{
+        window.alert("계정정보가 없거나, 비밀번호를 잘못 입력하셨습니다.");
+      })
+    //RestAPICall(requestBody, "http://localhost:8080/member");
+  }
+  
+  const ActiveIsPassedLogin = () => {
+    return idValue.includes('@') && pwValue.length >= 5
+      ? setActive(true)
+      : setActive(false);
   };
-
-  // const ActiveIsPassedLogin = () => {
-  //   return idValue.includes('@') && pwValue.length >= 5
-  //     ? setActive(true)
-  //     : setActive(false);
-  // };
 
   return (
     <SafeAreaView
@@ -82,7 +79,7 @@ const LoginScreen = ({ navigation }) => {
             fontSize: 28,
             fontWeight: "500",
             color: activeColors.tint,
-            marginBottom: 30,
+            marginBottom: 10,
           }}
         >
         
@@ -121,14 +118,14 @@ const LoginScreen = ({ navigation }) => {
           onChangeText={text => onChangePW(text)}
         />
 
-        <PostComponent
+        <CustomButton
           label={"Login"}
           className={active ? 'activeLoginBtn' : 'loginBtn'}
           disabled={idValue === '' || pwValue === '' ? true : false}
           url="http://localhost:8080/member"
-          param={idValue}
+          //param= {pwValue => searchParams(pwValue)}
           onPress={() => {
-            //handleRestCallPress();
+            handleRestCallPress();
             //navigation.navigate("Footer");
           }}
         />
@@ -137,17 +134,18 @@ const LoginScreen = ({ navigation }) => {
           style={{
             textAlign: "center",
             color: activeColors.tint,
-            marginBottom: 30,
+            marginBottom: 10,
           }}
         >
           간편 로그인
+
         </Text>
 
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            marginBottom: 30,
+            marginBottom: 10,
           }}
         >
           <TouchableOpacity
@@ -155,13 +153,13 @@ const LoginScreen = ({ navigation }) => {
             style={{
               backgroundColor: activeColors.secondary,
               borderRadius: 10,
-              paddingHorizontal: 30,
+              paddingHorizontal: 20,
               paddingVertical: 20,
             }}
           >
             <Image
               source={require("../images/kakao.jpg")}
-              style={{ height: 30, width: 30 }}
+              style={{ height: 20, width: 20 }}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -169,13 +167,13 @@ const LoginScreen = ({ navigation }) => {
             style={{
               backgroundColor: activeColors.secondary,
               borderRadius: 10,
-              paddingHorizontal: 30,
+              paddingHorizontal: 20,
               paddingVertical: 20,
             }}
           >
             <Image
               source={require("../images/naver.jpg")}
-              style={{ height: 30, width: 30 }}
+              style={{ height: 20, width: 20 }}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -183,13 +181,13 @@ const LoginScreen = ({ navigation }) => {
             style={{
               backgroundColor: activeColors.secondary,
               borderRadius: 10,
-              paddingHorizontal: 30,
+              paddingHorizontal: 20,
               paddingVertical: 20,
             }}
           >
             <Image
               source={require("../images/google.png")}
-              style={{ height: 30, width: 30 }}
+              style={{ height: 20, width: 20 }}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -197,36 +195,36 @@ const LoginScreen = ({ navigation }) => {
             style={{
               backgroundColor: activeColors.secondary,
               borderRadius: 10,
-              paddingHorizontal: 30,
+              paddingHorizontal: 20,
               paddingVertical: 20,
             }}
           >
             <Image
               source={require("../images/facebook.png")}
-              style={{ height: 30, width: 30 }}
+              style={{ height: 20, width: 20 }}
             />
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {}}
             style={{
               backgroundColor: activeColors.secondary,
               borderRadius: 10,
-              paddingHorizontal: 30,
+              paddingHorizontal: 20,
               paddingVertical: 20,
             }}
           >
             <Image
               source={require("../images/apple.png")}
-              style={{ height: 30, width: 30 }}
+              style={{ height: 20, width: 20 }}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         {/* <View
           style={{
             flexDirection: "row",
             justifyContent: "center",
-            marginBottom: 30,
+            marginBottom: 10,
           }}
         >
           <Text style={{ color: activeColors.tint }}>New to the app? </Text>
