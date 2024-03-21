@@ -1,18 +1,17 @@
-import React, { useContext, useState, useRef } from "react";
-import { colors } from "../config/theme";
-import { ThemeContext } from "../context/ThemeContext";
-import { View, ScrollView, RefreshControl } from "react-native";
-import { StyleSheet } from "react-native";
+import React, { useContext, useState } from "react";
+import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
 import CategoryTabSection from "../components/sections/CategoryTabSection";
 import FeaturedItemsSection from "../components/sections/FeaturedItemsSection";
 import HorizontalDealsSection from "../components/sections/HorizontalDealsSection";
+import { colors } from "../config/theme";
+import { ThemeContext } from "../context/ThemeContext";
 
-const HomeScreens = () => {
+const HomeScreens = (data) => {
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
 
   const [refreshing, setRefreshing] = useState(false);
-
+  console.log("data : " + data);
   const onRefresh = () => {
     setRefreshing(true);
 

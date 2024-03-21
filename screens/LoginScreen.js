@@ -31,21 +31,21 @@ const LoginScreen = ({ navigation }) => {
   const handleRestCallPress = () => {
     ActiveIsPassedLogin();
     setRequestBody({
-      userId: idValue,
+      userNo: idValue,
       userNm: pwValue
     });
-    axios.get('http://localhost:8080/member/'+idValue,setRequestBody)
+    axios.get('http://localhost:8080/login/'+idValue,setRequestBody)
       .then((response) => {
         setUserStatus(response.data);
         {userStatus.map((value, key)=>{
-            console.log([value[0].userId]);
+            console.log([value[0].userNo]);
           })
         }
+        navigation.navigate("Footer",data={userStatus});
       })
       .catch((error) =>{
         window.alert("계정정보가 없거나, 비밀번호를 잘못 입력하셨습니다.");
       })
-    //RestAPICall(requestBody, "http://localhost:8080/member");
   }
   
   const ActiveIsPassedLogin = () => {
