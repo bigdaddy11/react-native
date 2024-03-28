@@ -6,12 +6,15 @@ import HorizontalDealsSection from "../components/sections/HorizontalDealsSectio
 import { colors } from "../config/theme";
 import { ThemeContext } from "../context/ThemeContext";
 
-const HomeScreens = (data) => {
+const HomeScreens = ({userStatus}) => {
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
 
   const [refreshing, setRefreshing] = useState(false);
-  console.log("data : " + data);
+  const [userData, setUserData] = useState(userStatus);
+
+  console.log(userData);
+
   const onRefresh = () => {
     setRefreshing(true);
 

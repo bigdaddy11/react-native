@@ -21,11 +21,11 @@ const LoginScreen = ({ navigation }) => {
   const [active, setActive] = useState(false);
   const [idValue, onChangeID] = useState('');
   const [pwValue, onChangePW] = useState('');
-  const [userStatus, setUserStatus] = useState([]);
+  const [userStatus, setUserStatus] = useState();
 
   const [requestBody, setRequestBody] = useState();
   let activeColors = colors[theme.mode];
-
+  
   //const { isLoading, error, sendRequest: fetchDatas } = RestAPICall();
   //const [datas, setDatas] = useState([]);
   const handleRestCallPress = () => {
@@ -37,11 +37,8 @@ const LoginScreen = ({ navigation }) => {
     axios.get('http://localhost:8080/login/'+idValue,setRequestBody)
       .then((response) => {
         setUserStatus(response.data);
-        {userStatus.map((value, key)=>{
-            console.log([value[0].userNo]);
-          })
-        }
-        navigation.navigate("Footer",data={userStatus});
+        console.log("userStatus : " + userStatus);
+        navigation.navigate("Footer",userStatus);
       })
       .catch((error) =>{
         window.alert("계정정보가 없거나, 비밀번호를 잘못 입력하셨습니다.");
@@ -126,7 +123,7 @@ const LoginScreen = ({ navigation }) => {
           //param= {pwValue => searchParams(pwValue)}
           onPress={() => {
             handleRestCallPress();
-            //navigation.navigate("Footer");
+            navigation.navigate("Footer");
           }}
         />
 
