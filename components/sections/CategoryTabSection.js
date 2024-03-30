@@ -18,7 +18,8 @@ const CategoryTabSection = () => {
     axios.get('http://localhost:8080/category')
       .then((response) => {
         setCategory(response.data);
-        // /setCategory(0);
+        handleCategoryPress(response.data,0);
+        
       })
       .catch((error) =>{
         

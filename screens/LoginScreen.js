@@ -21,8 +21,8 @@ const LoginScreen = ({ navigation }) => {
   const [active, setActive] = useState(false);
   const [idValue, onChangeID] = useState('');
   const [pwValue, onChangePW] = useState('');
-  const [userStatus, setUserStatus] = useState();
-
+  //const [userStatus, setUserStatus] = useState({});
+  const userStatus = [];
   const [requestBody, setRequestBody] = useState();
   let activeColors = colors[theme.mode];
   
@@ -32,18 +32,24 @@ const LoginScreen = ({ navigation }) => {
     ActiveIsPassedLogin();
     setRequestBody({
       userNo: idValue,
-      userNm: pwValue
+      userPw: pwValue
     });
-    axios.get('http://localhost:8080/login/'+idValue,setRequestBody)
+    axios.get('http://localhost:8080/login/'+idValue,requestBody)
       .then((response) => {
-        setUserStatus(response.data);
-        console.log("userStatus : " + userStatus);
-        navigation.navigate("Footer",userStatus);
+        console.log(response.data[0].userId);
+        // (Object.values(response.data[0].)).map((item, index) => (
+        //   userStatus.push()
+        // ));
+        
+        // console.log(userStatus);
+        navigation.navigate("Footer",response.data[0]);
       })
       .catch((error) =>{
         window.alert("계정정보가 없거나, 비밀번호를 잘못 입력하셨습니다.");
       })
   }
+
+  
   
   const ActiveIsPassedLogin = () => {
     return idValue.includes('@') && pwValue.length >= 5
@@ -123,7 +129,7 @@ const LoginScreen = ({ navigation }) => {
           //param= {pwValue => searchParams(pwValue)}
           onPress={() => {
             handleRestCallPress();
-            navigation.navigate("Footer");
+            //navigation.navigate("Footer");
           }}
         />
 

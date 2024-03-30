@@ -3,6 +3,7 @@ import { ScrollView } from "react-native";
 import CardComponent from "../cards/CardComponent";
 
 const CategoryContent = ({ selectedCategory }) => {
+  //console.log(selectedCategory.categoryCode);
   const categoryImages = {
     "Category 1": [
       require("../../images/sample_image_1.jpg"),

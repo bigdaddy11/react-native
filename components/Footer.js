@@ -1,18 +1,20 @@
-import React, { useContext } from "react";
-import SettingsScreen from "../screens/Settings";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React, { useContext } from "react";
 import { colors } from "../config/theme";
 import { ThemeContext } from "../context/ThemeContext";
 import CartScreen from "../screens/CartScreen";
 import HomeScreen from "../screens/HomeScreen";
+import SettingsScreen from "../screens/Settings";
 
 const Tab = createBottomTabNavigator();
 
-export default function Footer() {
+export default function Footer({ route }) {
   const { theme, updateTheme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
 
+  const userConfig = route.params;
+  console.log("route.params.userId : " + userConfig);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -54,7 +56,7 @@ export default function Footer() {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Cart" component={CartScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} initialParams={{userId: route.params.userId}}/>
     </Tab.Navigator>
   );
 }

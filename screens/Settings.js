@@ -1,22 +1,24 @@
+import { Ionicons } from "@expo/vector-icons";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import {
-  View,
-  TouchableOpacity,
+  Appearance,
+  ScrollView,
   StyleSheet,
   Switch,
-  ScrollView,
-  Appearance,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import SettingsItem from "../components/settings/SettingsItem";
+import StyledText from "../components/texts/StyledText";
 import { colors } from "../config/theme";
 import { ThemeContext } from "../context/ThemeContext";
-import StyledText from "../components/texts/StyledText";
-import SettingsItem from "../components/settings/SettingsItem";
-import { Ionicons } from "@expo/vector-icons";
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = ({ navigation, route }) => {
   const { theme, updateTheme } = useContext(ThemeContext);
+  const { userProp, setUserProp } = useState();
   let activeColors = colors[theme.mode];
-
+  console.log("Setting : " + route.params.userId);
   //here we set the state of the switch to the current theme
   //theme.mode is the current theme which we get from the context
   const [isDarkTheme, setIsDarkTheme] = useState(theme.mode === "dark");
@@ -34,7 +36,25 @@ const SettingsScreen = ({ navigation }) => {
     Appearance.addChangeListener(({ colorScheme }) => {
       colorScheme === "dark" ? setIsDarkTheme(true) : setIsDarkTheme(false);
     });
+
+    axios.get('http://localhost:8080/login/prop/'+route.params.userId)
+    .then((response) => {
+      console.log("Setting login prop" + response.data[0]);
+      setUserProp(response.data);
+    })
+    .catch((error) =>{
+      //window.alert("계정정보가 없거나, 비밀번호를 잘못 입력하셨습니다.");
+    })
   }, []);
+
+  const item = (Object.values(userProp)).map((item, index) => (
+    <SettingsItem label={item.userNm}>
+        <StyledText>{item.userNm}</StyledText>
+    </SettingsItem>
+        //key={index}
+        
+
+  ));
 
   return (
     <ScrollView
@@ -50,10 +70,10 @@ const SettingsScreen = ({ navigation }) => {
       </StyledText>
 
       <View style={styles.section}>
-        <SettingsItem label="Name">
+        <SettingsItem label="이름">
           <StyledText>Maro</StyledText>
         </SettingsItem>
-        <SettingsItem label="Joined On">
+        <SettingsItem label="마지막로그인">
           <StyledText>02/12/2022</StyledText>
         </SettingsItem>
       </View>
