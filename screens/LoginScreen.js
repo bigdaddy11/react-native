@@ -36,7 +36,7 @@ const LoginScreen = ({ navigation }) => {
     });
     axios.get('http://localhost:8080/login/'+idValue,requestBody)
       .then((response) => {
-        console.log(response.data[0].userId);
+        //console.log(response.data[0].userId);
         // (Object.values(response.data[0].)).map((item, index) => (
         //   userStatus.push()
         // ));
@@ -128,8 +128,8 @@ const LoginScreen = ({ navigation }) => {
           url="http://localhost:8080/member"
           //param= {pwValue => searchParams(pwValue)}
           onPress={() => {
-            handleRestCallPress();
-            //navigation.navigate("Footer");
+            //handleRestCallPress();
+            navigation.navigate("Footer");
           }}
         />
 

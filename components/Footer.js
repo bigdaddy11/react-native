@@ -13,8 +13,8 @@ export default function Footer({ route }) {
   const { theme, updateTheme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
 
-  const userConfig = route.params;
-  console.log("route.params.userId : " + userConfig);
+  //const userConfig = route.params;
+  //console.log("route.params.userId : " + userConfig);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -56,7 +56,8 @@ export default function Footer({ route }) {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Cart" component={CartScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} initialParams={{userId: route.params.userId}}/>
+      {/* <Tab.Screen name="Settings" component={SettingsScreen} initialParams={{userId: route.params.userId}}/> */}
+      <Tab.Screen name="Settings" component={SettingsScreen}/>
     </Tab.Navigator>
   );
 }

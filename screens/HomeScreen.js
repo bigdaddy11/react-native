@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
 import CategoryTabSection from "../components/sections/CategoryTabSection";
-import FeaturedItemsSection from "../components/sections/FeaturedItemsSection";
 import HorizontalDealsSection from "../components/sections/HorizontalDealsSection";
 import { colors } from "../config/theme";
 import { ThemeContext } from "../context/ThemeContext";
@@ -48,7 +47,7 @@ const HomeScreens = () => {
 
           <CategoryTabSection />
         </ScrollView>
-        <FeaturedItemsSection />
+        {/* <FeaturedItemsSection /> */}
         <ScrollView>
           <View
             style={{

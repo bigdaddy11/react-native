@@ -1,7 +1,7 @@
-import { Text, View, StyleSheet } from "react-native";
 import React, { useContext } from "react";
-import { ThemeContext } from "../../context/ThemeContext";
+import { StyleSheet, View } from "react-native";
 import { colors } from "../../config/theme";
+import { ThemeContext } from "../../context/ThemeContext";
 import StyledText from "../texts/StyledText";
 
 //receives font size and weight as input

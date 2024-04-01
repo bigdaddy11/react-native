@@ -1,5 +1,4 @@
 import { Ionicons } from "@expo/vector-icons";
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import {
   Appearance,
@@ -18,7 +17,7 @@ const SettingsScreen = ({ navigation, route }) => {
   const { theme, updateTheme } = useContext(ThemeContext);
   const { userProp, setUserProp } = useState();
   let activeColors = colors[theme.mode];
-  console.log("Setting : " + route.params.userId);
+  //console.log("Setting : " + route.params.userId);
   //here we set the state of the switch to the current theme
   //theme.mode is the current theme which we get from the context
   const [isDarkTheme, setIsDarkTheme] = useState(theme.mode === "dark");
@@ -37,24 +36,24 @@ const SettingsScreen = ({ navigation, route }) => {
       colorScheme === "dark" ? setIsDarkTheme(true) : setIsDarkTheme(false);
     });
 
-    axios.get('http://localhost:8080/login/prop/'+route.params.userId)
-    .then((response) => {
-      console.log("Setting login prop" + response.data[0]);
-      setUserProp(response.data);
-    })
-    .catch((error) =>{
-      //window.alert("계정정보가 없거나, 비밀번호를 잘못 입력하셨습니다.");
-    })
+    // axios.get('http://localhost:8080/login/prop/'+route.params.userId)
+    // .then((response) => {
+    //   console.log("Setting login prop" + response.data[0]);
+    //   setUserProp(response.data);
+    // })
+    // .catch((error) =>{
+    //   //window.alert("계정정보가 없거나, 비밀번호를 잘못 입력하셨습니다.");
+    // })
   }, []);
 
-  const item = (Object.values(userProp)).map((item, index) => (
-    <SettingsItem label={item.userNm}>
-        <StyledText>{item.userNm}</StyledText>
-    </SettingsItem>
-        //key={index}
+  // const item = (Object.values(userProp)).map((item, index) => (
+  //   <SettingsItem label={item.userNm}>
+  //       <StyledText>{item.userNm}</StyledText>
+  //   </SettingsItem>
+  //       //key={index}
         
 
-  ));
+  // ));
 
   return (
     <ScrollView

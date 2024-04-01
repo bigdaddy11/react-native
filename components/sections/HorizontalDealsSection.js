@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { View, Text, ScrollView } from "react-native";
-import DealsCard from "../cards/DealsCard";
+import { ScrollView, Text, View } from "react-native";
 import { colors } from "../../config/theme";
 import { ThemeContext } from "../../context/ThemeContext";
+import PostCard from "../cards/PostCard";
 
 const images = [
   require("../../images/sample_image_1.jpg"),
@@ -34,13 +34,14 @@ const HorizontalDealsSection = ({ selectedCategory }) => {
       </Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {images.map((imageSource, index) => (
-          <DealsCard
+          <PostCard
             key={index}
             imageSource={imageSource}
-            title={`Sample Title - ${index}`}
+            title={`Title - ${index}`}
             description={`This is a sample description for the ${index} card component.`}
           />
         ))}
+        
       </ScrollView>
     </View>
   );
