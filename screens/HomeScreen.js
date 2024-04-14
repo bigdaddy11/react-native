@@ -49,15 +49,18 @@ const HomeScreens = () => {
         </ScrollView>
         {/* <FeaturedItemsSection /> */}
         <ScrollView>
-          <View
+          <Flex dire>
+            <View
             style={{
               flexDirection: "row",
               marginTop: 10,
               paddingHorizontal: 10,
+              flexGrow: 7,
             }}
-          ></View>
-
-          <HorizontalDealsSection />
+            ></View>
+            { <HorizontalDealsSection /> }
+          </Flex>
+          
         </ScrollView>
       </View>
     </ScrollView>

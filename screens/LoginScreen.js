@@ -49,8 +49,19 @@ const LoginScreen = ({ navigation }) => {
       })
   }
 
-  
-  
+  const GoogleLoginPress = () => {
+    axios.get('http://localhost:8080/oauth2/authorization/google')
+    //axios.get('http://localhost:8080/oauth/loginInfo')
+    .then((response) => {
+      console.log(response.data);
+      // console.log(userStatus);
+      navigation.navigate("Footer",response.data);
+    })
+    .catch((error) =>{
+      window.alert("계정정보가 없거나, 비밀번호를 잘못 입력하셨습니다.");
+    })
+  }
+
   const ActiveIsPassedLogin = () => {
     return idValue.includes('@') && pwValue.length >= 5
       ? setActive(true)
@@ -124,8 +135,7 @@ const LoginScreen = ({ navigation }) => {
         <CustomButton
           label={"Login"}
           className={active ? 'activeLoginBtn' : 'loginBtn'}
-          disabled={idValue === '' || pwValue === '' ? true : false}
-          url="http://localhost:8080/member"
+          disabled={idValue === '' || pwValue === '' ? true : false}  
           //param= {pwValue => searchParams(pwValue)}
           onPress={() => {
             //handleRestCallPress();
@@ -180,7 +190,9 @@ const LoginScreen = ({ navigation }) => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => {
+              GoogleLoginPress();
+            }}
             style={{
               backgroundColor: activeColors.secondary,
               borderRadius: 10,
