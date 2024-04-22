@@ -5,6 +5,7 @@ import { colors } from "../config/theme";
 import { ThemeContext } from "../context/ThemeContext";
 import CartScreen from "../screens/CartScreen";
 import HomeScreen from "../screens/HomeScreen";
+import HomeTestScreen from "../screens/HomeTestScreen";
 import SettingsScreen from "../screens/Settings";
 
 const Tab = createBottomTabNavigator();
@@ -24,7 +25,9 @@ export default function Footer({ route }) {
         headerShown: true,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          if (route.name === "Home") {
+          if (route.name === "HomeTest") {
+            // iconName = focused ? "home" : "home-outline";
+            // return <Ionicons name={iconName} size={24} color={color} />;
             iconName = focused ? "home" : "home-outline";
             return <Ionicons name={iconName} size={24} color={color} />;
           } else if (route.name === "Settings") {
@@ -33,7 +36,11 @@ export default function Footer({ route }) {
           } else if (route.name === "Cart") {
             iconName = focused ? "cart" : "cart-outline";
             return <Ionicons name={iconName} size={24} color={color} />;
-          }
+          } 
+          // else if (route.name === "HomeTest") {
+          //   iconName = focused ? "home" : "home-outline";
+          //   return <Ionicons name={iconName} size={24} color={color} />;
+          // }
 
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={24} color={color} />;
@@ -54,7 +61,8 @@ export default function Footer({ route }) {
         headerTintColor: activeColors.tint,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="HomeTest" component={HomeTestScreen}/>
+      {/* <Tab.Screen name="Home" component={HomeScreen} /> */}
       <Tab.Screen name="Cart" component={CartScreen} />
       {/* <Tab.Screen name="Settings" component={SettingsScreen} initialParams={{userId: route.params.userId}}/> */}
       <Tab.Screen name="Settings" component={SettingsScreen}/>

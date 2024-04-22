@@ -2,10 +2,11 @@ import React, { useContext, useState } from "react";
 import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
 import CategoryTabSection from "../components/sections/CategoryTabSection";
 import HorizontalDealsSection from "../components/sections/HorizontalDealsSection";
+import FeaturedItemsSection from "../components/sections/FeaturedItemsSection"
 import { colors } from "../config/theme";
 import { ThemeContext } from "../context/ThemeContext";
 
-const HomeScreens = () => {
+const HomeTestScreen = () => {
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
 
@@ -40,14 +41,14 @@ const HomeScreens = () => {
           <View
             style={{
               flexDirection: "row",
-              marginTop: 10,
+              // marginTop: 10,
               paddingHorizontal: 10,
             }}
           ></View>
 
           <CategoryTabSection />
         </ScrollView>
-        {/* <FeaturedItemsSection /> */}
+        { <FeaturedItemsSection /> }
         <ScrollView>
           <View
           style={{
@@ -68,6 +69,7 @@ const HomeScreens = () => {
 const styles = StyleSheet.create({
   Container: {
     flex: 1,
+    flexDirection: "column"
   },
   sectionTitle: {
     marginTop: 25,
@@ -76,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreens;
+export default HomeTestScreen;

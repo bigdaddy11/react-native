@@ -41,12 +41,13 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 3,
     padding: 10,
-    width: "48%", // Adjust this value if necessary
-    marginBottom: 20,
+    width: "100%", // Adjust this value if necessary
+    marginBottom: 10,
+    flexDirection: "row",
   },
   image: {
-    width: "100%",
-    height: 150,
+    width: "25%",
+    height: 100,
     borderRadius: 10,
     marginBottom: 10,
   },
@@ -54,10 +55,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
     marginBottom: 5,
+    left: 10,
   },
   description: {
     fontSize: 14,
     color: "#7a7a7a",
+    left: 10,
   },
 });
 
