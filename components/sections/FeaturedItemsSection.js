@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Alert } from "react-native";
 import axios from "axios";
 import FeaturedCardComponent from "../cards/FeaturedCardComponent";
 import { colors } from "../../config/theme";
 import { ThemeContext } from "../../context/ThemeContext";
+import PostWrite from "../content/PostWrite";
+import { Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 const images = [
   require("../../images/sample_image_1.jpg"),
@@ -12,10 +15,15 @@ const images = [
   require("../../images/sample_image_4.jpg"),
 ];
 
+//top: Dimensions.get('window').height - insets.bottom - 100
+const windowDimensions = Dimensions.get('window');
+const screenDimensions = Dimensions.get('screen');
+
 const FeaturedItemsSection = () => {
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
   const [post,setPost] = useState({});
+  const navigation = useNavigation();
 
   useEffect(() => {
     axios.get('http://localhost:8080/post')
@@ -24,7 +32,7 @@ const FeaturedItemsSection = () => {
         //handleCategoryPress(response.data,0);
         
       })
-      .catch((error) =>{
+      .catch((error) =>{  
         
       })
     },[]);
@@ -45,6 +53,17 @@ const FeaturedItemsSection = () => {
   return (
     <View>
       {item}
+      <TouchableOpacity>
+        <View style={[
+          styles.container
+        ]}>
+          <Text style={{color: "#FFFFFF"}} onPress={() => {
+            navigation.navigate("PostWrite");
+          }}>+
+          </Text>
+        </View>
+      </TouchableOpacity>
+      
     </View>
     //  <View>
     //    {/* <Text
@@ -82,5 +101,28 @@ const FeaturedItemsSection = () => {
     // </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#00A5FF",
+    //borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 3,
+    borderRadius: 100 ,
+    marginHorizontal: 10,
+    marginVertical: 5,
+    width: "40px",
+    height: "40px",
+    justifyContent: "center",
+    alignItems: "center",
+    position: 'absolute',
+    zIndex: 9999,
+    top: -350,
+    right: 0,
+  },
+});
 
 export default FeaturedItemsSection;
